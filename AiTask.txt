@@ -1,0 +1,41 @@
+import random
+
+# Function to calculate the fitness value of a genotype (binary string)
+def fitness_function(genotype):
+    return sum(genotype)
+
+# Function for single-point crossover
+def crossover(parent1, parent2):
+    crossover_point = random.randint(1, len(parent1) - 1)
+    child1 = parent1[:crossover_point] + parent2[crossover_point:]
+    child2 = parent2[:crossover_point] + parent1[crossover_point:]
+    return child1, child2
+
+# Function for bit-flip mutation
+def mutation(genotype, mutation_rate):
+    return [1 - gene if random.random() < mutation_rate else gene for gene in genotype]
+
+# Generate 4 random genotypes (binary strings) as the initial population
+genotype_length = 10
+population_size = 4
+initial_population = [random.choices([0, 1], k=genotype_length) for _ in range(population_size)]
+
+# Evaluate the fitness of each genotype in the initial population
+fitness_values_initial = [fitness_function(genotype) for genotype in initial_population]
+
+# Perform crossover and mutation
+mutation_rate = 0.1  # You can adjust the mutation rate as needed
+parent1, parent2 = initial_population[0], initial_population[1]
+child1, child2 = crossover(parent1, parent2)
+
+# Apply mutation to the offspring
+mutated_child1 = mutation(child1, mutation_rate)
+mutated_child2 = mutation(child2, mutation_rate)
+
+# Calculate fitness values for the offspring after crossover and mutation
+fitness_child1, fitness_child2 = fitness_function(mutated_child1), fitness_function(mutated_child2)
+
+# Compare the fitness values
+print("Fitness values of the initial population:", fitness_values_initial)
+print("Fitness value of child1 after crossover and mutation:", fitness_child1)
+print("Fitness value of child2 after crossover and mutation:", fitness_child2)
