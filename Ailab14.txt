@@ -1,0 +1,107 @@
+21-45009-2
+Irtiza Ahsan Abir
+
+(a)
+class TreeNode:
+    def __init__(self, value):
+        self.value = value
+        self.left = None
+        self.right = None
+
+def create_tree():
+    root = TreeNode(5)
+    root.left = TreeNode(3)
+    root.right = TreeNode(8)
+    root.left.left = TreeNode(1)
+    root.left.right = TreeNode(4)
+    root.right.left = TreeNode(7)
+    root.right.right = TreeNode(10)
+    root.left.left.left = TreeNode(0)
+    root.left.left.right = TreeNode(2)
+    return root
+
+def find_highest_node(node):
+    if node is None:
+        return float('-inf')
+    return max(node.value, find_highest_node(node.left), find_highest_node(node.right))
+
+tree_root = create_tree()
+highest_value = find_highest_node(tree_root)
+print("Highest value in the tree:", highest_value)
+
+
+(b)
+class TreeNode:
+    def __init__(self, value):
+        self.value = value
+        self.left = None
+        self.right = None
+
+def insert_node(root, value):
+    if root is None:
+        return TreeNode(value)
+    if value < root.value:
+        root.left = insert_node(root.left, value)
+    else:
+        root.right = insert_node(root.right, value)
+    return root
+
+def inorder_traversal(root):
+    if root:
+        inorder_traversal(root.left)
+        print(root.value, end=" ")
+        inorder_traversal(root.right)
+
+tree_root = None
+values = [5, 3, 8, 1, 4, 7, 10, 0, 2, 11]  # Including a new node with value 11
+for value in values:
+    tree_root = insert_node(tree_root, value)
+
+print("Inorder traversal of the tree after insertion:")
+inorder_traversal(tree_root)
+
+
+(c)
+class TreeNode:
+    def __init__(self, value):
+        self.value = value
+        self.left = None
+        self.right = None
+
+def apply_minimax(root, is_maximizer):
+    if root is None:
+        return
+
+    if is_maximizer:
+        root.value = max(root.left.value if root.left else 0, root.right.value if root.right else 0)
+    else:
+        root.value = min(root.left.value if root.left else float('inf'), root.right.value if root.right else float('inf'))
+
+    apply_minimax(root.left, not is_maximizer)
+    apply_minimax(root.right, not is_maximizer)
+
+def inorder_traversal(root):
+    if root:
+        inorder_traversal(root.left)
+        print(root.value, end=" ")
+        inorder_traversal(root.right)
+
+# Create the initial tree
+tree_root = TreeNode(5)
+tree_root.left = TreeNode(3)
+tree_root.right = TreeNode(8)
+tree_root.left.left = TreeNode(1)
+tree_root.left.right = TreeNode(4)
+tree_root.right.left = TreeNode(7)
+tree_root.right.right = TreeNode(10)
+tree_root.left.left.left = TreeNode(0)
+tree_root.left.left.right = TreeNode(2)
+
+print("Original inorder traversal:")
+inorder_traversal(tree_root)
+print()
+
+apply_minimax(tree_root, True)
+
+print("Inorder traversal after applying minimax:")
+inorder_traversal(tree_root)

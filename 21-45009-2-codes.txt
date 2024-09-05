@@ -1,0 +1,119 @@
+def my_function():
+ print("hello from a  function")
+my_function()
+    
+    
+def myfunction(fname):
+    Print(fname+ "Refnes")
+    myfunction("Emil")
+    myfunction("Tobias")
+    myfunction("Linus")
+
+def myNUmberFunction(number, Iname):
+    print(number +" "+Iname)
+    myNUmberFunction("Emil","Tobias")
+    
+def myFun(*kids):
+    print ("the youngest child is "+kids[2])
+myFun("Emil","Tobias","Linus")
+
+
+def myFun1(child1,child2,child3):
+    print("the youngest child is"+child3)
+myFun1(child1="Emil",child2="Tobias",child3="Linus")
+
+def myFun2(**kid):
+    print("his last name is " +kid["lname"])
+    myFun2(fname= "Tobias",lname ="Refnes")
+    
+def myCountry(country="bangladesh"):
+    print("i am from "+ country)
+myCountry("sweden")
+myCountry("india")
+myCountry("china")
+myCountry("korea")
+
+
+def fun4(x):
+    return 5*a
+print (fun4(3))
+print (fun4(3))
+print (fun4(3))
+
+Questions
+1.////////////////////////////////////////////////
+import math
+
+def area_cal(a, b, c):
+    s = (a + b + c) / 2
+
+    area = math.sqrt(s * (s - a) * (s - b) * (s - c))
+
+    return area
+
+side1 = float(input("Enter the length of side 1: "))
+side2 = float(input("Enter the length of side 2: "))
+side3 = float(input("Enter the length of side 3: "))
+
+triangle_area = area_cal(side1, side2, side3)
+
+print("The area of the triangle is:", triangle_area)
+
+2.///////////////////////////////////////////////////////////
+
+def calculate_area(radius):
+    return 3.14159 * radius**2
+
+def calculate_perimeter(radius):
+    return 2 * 3.14159 * radius
+
+radius = float(input("Enter the radius of the circle: "))
+
+circle_area = calculate_area(radius)
+circle_perimeter = calculate_perimeter(radius)
+
+print("The area of the circle is:", circle_area)
+print("The perimeter of the circle is:", circle_perimeter)
+
+3.///////////////////////////////////////////////////////////////////
+def insertion_sort(arr):
+    for i in range(1, len(arr)):
+        key = arr[i]
+        j = i - 1
+        while j >= 0 and arr[j] > key:
+            arr[j + 1], arr[j] = arr[j], key
+            j -= 1
+
+numbers = [12, 6, 1, 9, 8, 7, 3, 4]
+insertion_sort(numbers)
+print("Sorted array:", numbers)
+
+4.///////////////////////////////////////////////////////
+def bubblesort(arr):
+    n = len(arr)
+    for i in range(n):
+        for j in range(0, n - i - 1):
+            if arr[j] > arr[j + 1]:
+                arr[j], arr[j + 1] = arr[j + 1], arr[j]
+        if all(arr[k] <= arr[k + 1] for k in range(n - i - 1)):
+            break
+
+numbers = [6, 8, 1, 15, 20, 22, 3, 4]
+bubblesort(numbers)
+print("Sorted array:", numbers)
+
+5./////////////////////////////////////////////////////
+def selectionsort(arr):
+    for i in range(len(arr) - 1):
+        min_index = i
+        for j in range(i + 1, len(arr)):
+            if arr[j] < arr[min_index]:
+                min_index = j
+        arr[i], arr[min_index] = arr[min_index], arr[i]
+
+numbers = [19, 20, 11, 16,18, 15, 13, 14]
+selectionsort(numbers)
+print("Sorted array:", numbers)
+
+
+

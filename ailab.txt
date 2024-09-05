@@ -1,0 +1,62 @@
+1. 
+def lcs(X, Y, m, n):
+
+	if m == 0 or n == 0:
+	    return 0
+	elif X[m-1] == Y[n-1]:
+	    return 1 + lcs(X, Y, m-1, n-1);
+	else:
+	    return max(lcs(X, Y, m, n-1), lcs(X, Y, m-1, n));
+
+X = "ACGTCCTGATGC"
+Y = "GATCTCTAGTCA"
+print ("Length of  is ", lcs(X, Y, len(X), len(Y))) 
+
+2.
+import random
+
+def single_point_crossover(parent1, parent2):
+
+    crossover_point = random.randint(1, len(parent1) - 1)
+
+
+    offspring1 = parent1[:crossover_point] + parent2[crossover_point:]
+    offspring2 = parent2[:crossover_point] + parent1[crossover_point:]
+
+    return offspring1, offspring2
+
+parent1 = "ACGTCCTGATGC"
+parent2 = "GATCTCTAGTCA"
+
+
+offspring1, offspring2 = single_point_crossover(parent1, parent2)
+print("Parent 1:", parent1)
+print("Parent 2:", parent2)
+print("Offspring 1:", offspring1)
+print("Offspring 2:", offspring2)
+
+
+
+
+3.def similarity_percentage(parents, offspring):
+    parent_chromosome = "".join(parents)
+    offspring_chromosome = "".join(offspring)
+
+    common_seq_length = sum(x == y for x, y in zip(parent_chromosome, offspring_chromosome))
+    similarity_percentage = (common_seq_length / max(len(parent_chromosome), len(offspring_chromosome))) * 100
+
+    return similarity_percentage
+
+
+parent1 = "ACGTCCTGATGC"
+parent2 = "GATCTCTAGTCA"
+offspring = "GATCTGTAGTGC"
+
+
+similarity_percent = similarity_percentage([parent1, parent2], [offspring])
+
+
+print("Parents:", parent1, parent2)
+print("Offspring:", offspring)
+print("Similarity percentage:", similarity_percent, "%")
+

@@ -1,0 +1,188 @@
+class Node:
+  def __init__(self, data):
+      self.left = None
+      self.right = None
+      self.data = data
+
+
+  def PrintTree(self):
+      if self.left:
+         self.left.PrintTree()
+      print( self.data)
+      if self.right:
+         self.right.PrintTree()
+
+root = Node(0)
+root.left = Node(3)
+root.right = Node(11)
+root.right.left = Node(12)
+root.right.right= Node(11)
+root.left.left = Node(9)
+root.left.right = Node(6)
+root.left.left.right= Node(4)
+root.left.left.left = Node(7)
+root.left.right.right = Node(4)
+root.left.right.left = Node(5)
+
+root.PrintTree()
+
+
+
+
+
+
+
+
+
+
+class Node:
+    def __init__(self, data):
+        self.left = None  
+        self.right = None  
+        self.data = data  
+
+    def PrintTree(self):
+        if self.left:
+            self.left.PrintTree()  
+        print(self.data)  
+        if self.right:
+            self.right.PrintTree() 
+
+    def minimax(self, maximizing_player):
+        if self.left is None and self.right is None:
+            return self.data  
+
+        if maximizing_player:
+            max_value = float('-inf')  
+            if self.left:
+                max_value = max(max_value, self.left.minimax(False))   
+            if self.right:
+                max_value = max(max_value, self.right.minimax(False)) 
+            self.data = max_value   
+            return max_value  
+        else:
+            min_value = float('inf')  
+            if self.left:
+                min_value = min(min_value, self.left.minimax(True))  
+            if self.right:
+                min_value = min(min_value, self.right.minimax(True))  
+            self.data = min_value  
+            return min_value 
+
+
+root = Node(0)
+root.left = Node(3)
+root.right = Node(11)
+root.right.left = Node(12)
+root.right.right = Node(7)
+root.left.left = Node(9)
+root.left.right = Node(6)
+root.left.left.right = Node(4)
+root.left.left.left = Node(7)
+root.left.right.right = Node(4)
+root.left.right.left = Node(5)
+root.right.right.right = Node(1)
+
+
+root.minimax(False)  
+
+
+root.PrintTree() 
+
+
+
+# Define a class to represent nodes in a binary tree
+class Node:
+    def __init__(self, data):
+        self.left = None  # Initialize left child as None
+        self.right = None  # Initialize right child as None
+        self.data = data  # Assign provided data to the node
+
+    def PrintTree(self):
+        if self.left:
+            self.left.PrintTree()  # Recursively print left subtree
+        print(self.data)  # Print the data of the current node
+        if self.right:
+            self.right.PrintTree()  # Recursively print right subtree
+
+    def minimax(self, maximizing_player):
+        if self.left is None and self.right is None:
+            return self.data  # Leaf node, return its data
+
+        if maximizing_player:
+            max_value = float('-inf')  # Initialize max_value as negative infinity
+            if self.left:
+                max_value = max(max_value, self.left.minimax(False))  # Recurse on left child
+            if self.right:
+                max_value = max(max_value, self.right.minimax(False))  # Recurse on right child
+            self.data = max_value  # Update the node's data with the max value
+            return max_value  # Return max value
+        else:
+            min_value = float('inf')  # Initialize min_value as positive infinity
+            if self.left:
+                min_value = min(min_value, self.left.minimax(True))  # Recurse on left child
+            if self.right:
+                min_value = min(min_value, self.right.minimax(True))  # Recurse on right child
+            self.data = min_value  # Update the node's data with the min value
+            return min_value  # Return min value
+
+    def alphabeta(self, alpha, beta, maximizing_player):
+        if self.left is None and self.right is None:
+            return self.data
+
+        if maximizing_player:
+            value = float('-inf')
+            if self.left:
+                value = max(value, self.left.alphabeta(alpha, beta, False))
+                alpha = max(alpha, value)
+                if alpha >= beta:
+                    return value
+            if self.right:
+                value = max(value, self.right.alphabeta(alpha, beta, False))
+                alpha = max(alpha, value)
+                if alpha >= beta:
+                    return value
+            self.data = value
+            return value
+        else:
+            value = float('inf')
+            if self.left:
+                value = min(value, self.left.alphabeta(alpha, beta, True))
+                beta = min(beta, value)
+                if alpha >= beta:
+                    return value
+            if self.right:
+                value = min(value, self.right.alphabeta(alpha, beta, True))
+                beta = min(beta, value)
+                if alpha >= beta:
+                    return value
+            self.data = value
+            return value
+
+# Create the root node and build the tree
+root = Node(0)
+root.left = Node(3)
+root.right = Node(11)
+root.right.left = Node(12)
+root.right.right = Node(7)
+root.left.left = Node(9)
+root.left.right = Node(6)
+root.left.left.right = Node(4)
+root.left.left.left = Node(7)
+root.left.right.right = Node(4)
+root.left.right.left = Node(5)
+root.right.right.right = Node(1)
+
+# Apply Minimax algorithm to update values of upper-level nodes
+root.minimax(False)
+
+# Print the tree structure after Minimax
+print("Tree Structure after Minimax:")
+root.PrintTree()
+
+# Apply Alpha-Beta Pruning algorithm to update values of upper-level nodes
+root.alphabeta(float('-inf'), float('inf'), False)
+
+# Print the tree structure after Alpha-Beta Pruning
+print("\nTree Structure after Alpha-Beta Pruning:")
+root.PrintTree()

@@ -1,0 +1,80 @@
+
+
+# Initial values of Alpha and Beta
+MAX, MIN = 1000, -1000
+
+class TreeNode:
+    def __init__(self, value_or_values):
+        if isinstance(value_or_values, int):
+            self.values = [value_or_values]
+        else:
+            self.values = value_or_values
+        self.left = None
+        self.right = None
+
+def construct_game_tree(node, depth, is_maximizing):
+    # Base case: If depth is 0, stop constructing the tree
+    if depth == 0:
+        return
+
+    if is_maximizing:
+        # If it's a maximizing level, create a left child with the maximum value from the current node's values
+        max_value = max(node.values)
+        node.left = TreeNode(max_value + 1)
+        # Recurse with the left child and switch to minimizing level (is_maximizing = False)
+        construct_game_tree(node.left, depth - 1, False)
+    else:
+        # If it's a minimizing level, create a right child with the minimum value from the current node's values
+        min_value = min(node.values)
+        node.right = TreeNode(min_value - 1)
+        # Recurse with the right child and switch back to maximizing level (is_maximizing = True)
+        construct_game_tree(node.right, depth - 1, True)
+
+def alpha_beta_search(node, depth, alpha, beta, is_maximizing):
+    if depth == 0 or node.left is None or node.right is None:
+        return max(node.values) if is_maximizing else min(node.values)
+
+    if is_maximizing:
+        best = MIN
+        for child in [node.left, node.right]:
+            value = alpha_beta_search(child, depth - 1, alpha, beta, False)
+            best = max(best, value)
+            alpha = max(alpha, best)
+            if alpha >= beta:
+                break
+        return best
+    else:
+        best = MAX
+        for child in [node.left, node.right]:
+            value = alpha_beta_search(child, depth - 1, alpha, beta, True)
+            best = min(best, value)
+            beta = min(beta, best)
+            if alpha >= beta:
+                break
+        return best
+
+def print_binary_tree(node, level=0, prefix="Root: "):
+    # Print the node's values along with the current level and prefix
+    if node is not None:
+        print(" " * (level * 4) + prefix + str(node.values))
+        # Recurse with the left child, updating the level and prefix
+        print_binary_tree(node.left, level + 1, "Left: ")
+        # Recurse with the right child, updating the level and prefix
+        print_binary_tree(node.right, level + 1, "Right: ")
+
+# Driver Code
+if __name__ == "__main__":
+    # Change the leaf values of the tree as desired
+    leaf_values = [15, 8, 22, 17, 4, 12, 20, 10]
+    depth = 3  # Adjust the depth as needed
+
+    root = TreeNode(leaf_values)
+    construct_game_tree(root, depth, True)
+
+    print("Binary Tree:")
+    print_binary_tree(root)
+
+    alpha = float('-inf')
+    beta = float('inf')
+    minmax_value = alpha_beta_search(root, depth, alpha, beta, True)
+    print("Minimax value at the root node:", minmax_value)

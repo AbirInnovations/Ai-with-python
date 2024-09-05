@@ -1,0 +1,85 @@
+1./////////////////////////////////
+
+
+def merge_sort(arr):
+    if len(arr) <= 1:
+        return arr
+
+    mid = len(arr) // 2
+    left_half = arr[:mid]
+    right_half = arr[mid:]
+
+
+    left_half = merge_sort(left_half)
+    right_half = merge_sort(right_half)
+
+
+    merged_arr = merge(left_half, right_half)
+
+    return merged_arr
+
+
+
+def merge(left, right):
+    merged = []
+    i = j = 0
+
+    while i < len(left) and j < len(right):
+        if left[i] < right[j]:
+            merged.append(left[i])
+            i += 1
+        else:
+            merged.append(right[j])
+            j += 1
+
+  
+    merged.extend(left[i:])
+    merged.extend(right[j:])
+
+    return merged
+
+
+def arrange_products(packet1, packet2):
+   
+    all_products = packet1 + packet2
+
+    sorted_products = merge_sort(all_products)
+
+    return sorted_products
+
+
+
+if __name__ == "__main__":
+    
+    packet1 = [8, 12, 5, 18, 10]
+
+    packet2 = [15, 20, 9, 25, 14]
+
+
+    sorted_list = arrange_products(packet1, packet2)
+
+ 
+    print("Sorted List of Products:")
+    for product in sorted_list:
+        print(product)
+
+
+2.//////////////////////////////////////////////////
+
+def search_item(fridge):
+    for item in fridge:
+        if item == "tomato":
+            return True
+    return False
+
+
+fridge_contents = ["apple", "tomato", "banana", "grape"]
+
+
+found_tomatoes = search_item(fridge_contents)
+
+
+if found_tomatoes:
+    print("The requested item is available in the fridge!")
+else:
+    print("The requested item is not available in the fridge.")

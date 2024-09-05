@@ -1,0 +1,181 @@
+1.........................................................
+	Iterative Deepening Search
+
+def perform_depth_limited_search(tree, node, goal, depth_limit):
+    if node == goal:
+        return True
+    if depth_limit == 0:
+        return False
+    if depth_limit > 0:
+        for child in tree.get(node, []):
+            if perform_depth_limited_search(tree, child, goal, depth_limit - 1):
+                return True
+    return False
+
+def iterative_deepening_search(tree, start, goal):
+    depth_limit = 0
+    while True:
+        if perform_depth_limited_search(tree, start, goal, depth_limit):
+            return True
+        else:
+            depth_limit += 1
+    
+
+if __name__ == "__main__":
+    # Build the tree structure as a dictionary
+    tree = {
+        "S": ["A", "C"],
+        "A": ["D", "B"],
+        "C": ["E", "G"],
+        "D": ["F", "H"],
+        "E": ["I"],
+        "B": [],
+        "G": [],
+        "F": [],
+        "H": [],
+        "I": [],
+    }
+
+    # Replace 'goal_node' with your actual goal node value.
+    goal_node = "H"
+
+    if iterative_deepening_search(tree, "S", goal_node):
+        print(goal_node + " Goal found " )
+    else:
+        print("Goal not found.")
+
+2.............................
+	
+Depth Limited Search
+
+def depth_limited_search(tree, node, goal, depth_limit):
+    if node == goal:
+        return True
+    if depth_limit == 0:
+        return False
+    if node not in tree:
+        return False
+    for child in tree[node]:
+        if depth_limited_search(tree, child, goal, depth_limit - 1):
+            return True
+    return False
+
+if __name__ == "__main__":
+    # Build the tree structure as a dictionary
+    tree = {
+        "X": ["A", "B"],
+        "A": ["C", "D"],
+        "B": ["I", "J"],
+        "c": ["E", "F"],
+        "D": ["G"],
+        "I": ["H"],
+        "J": [],
+        "E": [],
+        "F": [],
+        "G": [],
+        "H": [],
+    }
+
+    # Replace 'goal_node' with your actual goal node value.
+    goal_node = "H"
+    depth_limit = 2  # Set the depth limit according to your requirements.
+
+    if depth_limited_search(tree, "X", goal_node, depth_limit):
+        print("Goal found at " + goal_node)
+    else:
+        print("Goal not found.")
+
+3............................................................
+class Node:
+    def __init__(self, value):
+        self.value = value
+        self.left = None
+        self.right = None
+
+class BinaryTree:
+    def __init__(self):
+        self.root = None
+
+    def insert(self, value):
+        # Function to insert a value into the binary tree
+        if not self.root:
+            self.root = Node(value)
+        else:
+            self._insert_recursively(self.root, value)
+
+    def _insert_recursively(self, current_node, value):
+        # Helper function to insert recursively based on node values
+        if value < current_node.value:
+            if current_node.left is None:
+                current_node.left = Node(value)
+            else:
+                self._insert_recursively(current_node.left, value)
+        else:
+            if current_node.right is None:
+                current_node.right = Node(value)
+            else:
+                self._insert_recursively(current_node.right, value)
+
+    def inorder_traversal(self):
+        # Function to perform in-order traversal
+        return self._inorder_recursively(self.root)
+
+    def _inorder_recursively(self, node):
+        # Helper function for in-order traversal
+        if node is None:
+            return []
+        return self._inorder_recursively(node.left) + [node.value] + self._inorder_recursively(node.right)
+
+    def preorder_traversal(self):
+        # Function to perform pre-order traversal
+        return self._preorder_recursively(self.root)
+
+    def _preorder_recursively(self, node):
+        # Helper function for pre-order traversal
+        if node is None:
+            return []
+        return [node.value] + self._preorder_recursively(node.left) + self._preorder_recursively(node.right)
+
+    def postorder_traversal(self):
+        # Function to perform post-order traversal
+        return self._postorder_recursively(self.root)
+
+    def _postorder_recursively(self, node):
+        # Helper function for post-order traversal
+        if node is None:
+            return []
+        return self._postorder_recursively(node.left) + self._postorder_recursively(node.right) + [node.value]
+
+    def search(self, value):
+        # Function to search for a value in the binary tree
+        return self._search_recursively(self.root, value)
+
+    def _search_recursively(self, node, value):
+        # Helper function to search recursively for a value
+        if node is None or node.value == value:
+            return node
+        if value < node.value:
+            return self._search_recursively(node.left, value)
+        return self._search_recursively(node.right, value)
+
+if __name__ == "__main__":
+    # Create a binary tree and perform basic operations
+    binary_tree = BinaryTree()
+
+    values = [5, 3, 7, 2, 4, 6, 8]
+
+    for value in values:
+        binary_tree.insert(value)
+
+    # Print the in-order, pre-order, and post-order traversals
+    print("In-order traversal:", binary_tree.inorder_traversal())
+    print("Pre-order traversal:", binary_tree.preorder_traversal())
+    print("Post-order traversal:", binary_tree.postorder_traversal())
+
+    # Search for a value in the binary tree
+    search_value = 5
+    result = binary_tree.search(search_value)
+    if result:
+        print(f"Found {search_value} in the tree.")
+    else:
+        print(f"{search_value} not found in the tree.")

@@ -1,0 +1,103 @@
+1......................
+
+def bfs(visited, graph, node):  # function for BFS
+    visited.append(node)
+    queue = [node]  # Initialize a queue with the starting node
+
+    while queue:  # Creating a loop to visit each node
+        current_node = queue.pop(0)  # Dequeue the front element from the queue
+        print(current_node, end=" ")  # Print the node being visited
+
+        for neighbour in graph[current_node]:
+            if neighbour not in visited:
+                visited.append(neighbour)  # Mark the neighbor as visited
+                queue.append(neighbour)  # Enqueue the neighbor for further exploration
+
+
+
+if __name__ == "__main__":
+    graph = {
+        '5': ['3', '7'],
+        '3': ['2', '4'],
+        '7': ['8'],
+        '2': [],
+        '4': ['8'],
+        '8': []
+    }
+
+    visited = []  # List for visited nodes.
+
+    print("Following is the Breadth-First Search:")
+    bfs(visited, graph, '5')  # function calling
+
+2....................................................
+
+def dfs(visited, graph, node):
+    if node not in visited:  # Check if the current node is not visited
+        visited.add(node)  # Mark the current node as visited by adding it to the set
+        print(node, end=" ")  # Print the current node, indicating it's visited
+
+        for neighbour in graph[node]:  # Explore the neighbors of the current node
+            dfs(visited, graph, neighbour)  # Recursive call to DFS for the unvisited 
+
+
+if __name__ == "__main__":
+    graph = {
+        '5': ['3', '7'],
+        '3': ['2', '4'],
+        '7': ['8'],
+        '2': [],
+        '4': ['8'],
+        '8': []
+    }
+
+    visited = set()  # Set for visited nodes.
+
+    print("Following is the Depth-First Search:")
+    dfs(visited, graph, '5')  # Start the DFS from node '5'
+
+3.....................................................
+
+import heapq
+
+def ucs(graph, start_node, goal_node):
+    priority_queue = [(0, start_node)]  # Priority queue to store nodes and their costs
+    visited = set()  # Set to track visited nodes
+    path_cost = {start_node: 0}  # Dictionary to store the cost of reaching each node
+
+    while priority_queue:
+        current_cost, current_node = heapq.heappop(priority_queue)  # Dequeue the node with the lowest cost
+        visited.add(current_node)
+
+        if current_node == goal_node:
+            return path_cost[current_node]
+
+        for neighbor in graph[current_node]:
+            cost = 1  # Assuming each edge has a cost of 1
+            new_cost = current_cost + cost
+            if neighbor not in path_cost or new_cost < path_cost[neighbor]:
+                path_cost[neighbor] = new_cost
+                heapq.heappush(priority_queue, (new_cost, neighbor))
+
+    return float('inf')  # If no path is found, return infinity
+
+
+
+if __name__ == "__main__":
+    graph = {
+        '5': ['3', '7'],
+        '3': ['2', '4'],
+        '7': ['8'],
+        '2': [],
+        '4': ['8'],
+        '8': []
+    }
+
+    start_node = '5'
+    goal_node = '8'
+    cost = ucs(graph, start_node, goal_node)
+    
+    if cost != float('inf'):
+        print(f"The cost of the path from {start_node} to {goal_node} is: {cost}")
+    else:
+        print(f"No path found from {start_node} to {goal_node}.")
